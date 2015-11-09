@@ -1,4 +1,13 @@
-
+#' A generalized function to calculate network densities
+#'
+#' This function calculates network densities of either two-mode observational matrices
+#' or association matrices.
+#'
+#' @param x either a two-mode observational matrix or an association matrix
+#' @param type One of either "weighted" (default) or "twomode" indicating what kind of
+#'    matrix x is
+#'
+#' @return A singular value equal to the density of the matrix.
 
 net.density<-function(x,type="weighted") {
   if( class(x) != "matrix" ) x<-as.matrix(x)
@@ -12,6 +21,8 @@ net.density<-function(x,type="weighted") {
     n<-dim(x)[1]
     m<-dim(x)[2]
     den<-s/(n*m)
+  } else {
+    stop("Type incorrectly specified")
   }
   return(den)
 }
