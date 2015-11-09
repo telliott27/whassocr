@@ -10,7 +10,10 @@ net.density(x, type = "weighted")
 \item{x}{either a two-mode observational matrix or an association matrix}
 
 \item{type}{One of either "weighted" (default) or "twomode" indicating what kind of
-matrix x is}
+   matrix x is}
+}
+\value{
+A singular value equal to the density of the matrix.
 }
 \description{
 This function calculates network densities of either two-mode observational matrices
