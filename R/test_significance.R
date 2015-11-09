@@ -78,10 +78,28 @@ msdAssoc<-function(g,e) {
   return(S)
 }
 
-#need to break x out into a and ra
-test.assoc<-function(x,FUN=net.density,...) {
-  xvalue<-FUN(x$assoc,...)
-  xrand<-sapply(x$random$a,FUN=FUN,...)
+#' Significance test for network statistics of the association matrix
+#'
+#' Test whether a network statistic of an association matrix is
+#' significantly different than the mean of the network statistic
+#' for the random graphs.
+#'
+#' @param assoc A n X n association matrix
+#' @param rgraphs A list object returned by \code{\link{randomGraphs}}
+#' @param FUN a function to calculate a network statistic. The function should return a singular
+#' numeric value for which a mean and standard deviation can be calculated.
+#' @param ... Additional arguments to pass to \code{FUN}
+#'
+#' @return A list containing the following values:
+#'    \item{value}{the value of the test statistic for \code{assoc}}
+#'    \item{random.value}{the mean value of the test statistic for all random graphs in \code{rgraphs}}
+#'    \item{sd.value }{the standard deviation of \code{random.value}}
+#'    \item{p.up}{the percentage of random graphs with values higher than \code{value}}
+#'    \item{p.down}{the percentage of random graphs with values lower than \code{value}}
+
+test.assoc<-function(assoc,rgraphs,FUN=net.density,...) {
+  xvalue<-FUN(assoc,...)
+  xrand<-sapply(rgraphs$a,FUN=FUN,...)
   pscore.up<-length(which(xrand>=xvalue))/length(xrand)
   pscore.down<-length(which(xrand<=xvalue))/length(xrand)
   mean.xrand<-mean(xrand)
@@ -89,17 +107,4 @@ test.assoc<-function(x,FUN=net.density,...) {
   return(list(value=xvalue,random.value=mean.xrand,sd.value=sd.xrand,p.up=pscore.up,p.down=pscore.down))
 }
 
-#need to break x and y out into a and ra
-test.assoc.diff<-function(x,y,FUN=net.density,...) {
-  xvalue<-FUN(x$assoc,...)
-  yvalue<-FUN(y$assoc,...)
-  xrand<-sapply(x$random$a,FUN=FUN,...)
-  yrand<-sapply(y$random$a,FUN=FUN,...)
-  diff<-xvalue-yvalue
-  diff.rand<-xrand-yrand
-  pscore.up<-length(which(diff.rand>=diff))/length(diff.rand)
-  pscore.down<-length(which(diff.rand<=diff))/length(diff.rand)
-  mean.diff.rand<-mean(diff.rand)
-  sd.diff.rand<-sd(diff.rand)
-  return(list(diff=diff,random.diff=mean.diff.rand,random.sd=sd.diff.rand,p.up=pscore.up,p.down=pscore.down))
-}
+

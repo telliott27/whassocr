@@ -18,6 +18,6 @@ A numeric value equal to the mean square deviation of \code{g}
 \description{
 This calculates the mean square deviation of an association
 matrix returned by \code{\link{makeAssociation}}. Used internally by
-\code{\link{getSig}}
+\code{\link{getSig}}.
 }
 
