@@ -1,0 +1,18 @@
+Package: whassocr
+Type: Package
+Title: An Implementation of Whitehead's Association Analysis
+Version: 0.0.0.9000
+Date: 2015-11-06
+Authors@R: c(
+  person("Thomas","Elliott",email="telliott@fastmail.com",role=c("aut","cre")),
+  person("Justin","O'Neill",email="juiceboy@gmail.com",role="ppt"))
+Description: This package implements Whitehead's method for analyzing
+  association data. While Whitehead developed these techniques for animal
+  associations, this package is agnostic as to the nature of the data, but
+  assumes data are generally structured as entities in columns and
+  observations in rows, with cells=c(0,1) indicating whether entities
+  were observed during the row observation.
+License: GPL-3
+LazyData: TRUE
+Imports:
+  dplyr
