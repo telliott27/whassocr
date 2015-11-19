@@ -15,5 +15,8 @@ Description: This package implements Whitehead's method for analyzing
 License: GPL-3
 LazyData: TRUE
 URL: https://github.com/thom82/whassocr
-Imports:
+Imports: 
   dplyr
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr

@@ -1,0 +1,22 @@
+---
+title: "whassocr: A Package for Analyzing Association Networks"
+author: "Thomas Elliott"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{whassocr: A Package for Analyzing Association Networks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+##Introduction
+
+##Data
+
+##Association Indices
+
+##Random Data Generation
+
+##Testing Significance
+
+##Lagged Association Rates
