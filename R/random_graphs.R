@@ -58,38 +58,48 @@ randomGraphs<-function(x,n=1000) {
 
 
 sampleMatrix<-function(x) {
-
-  rn<-rbinom(1,1,0.5)
+  x<-as.matrix(x)
   m1<-which(x==1,arr.ind=TRUE)
   m0<-which(x==0,arr.ind=TRUE)
   ri<-intersect(m0[,1],m1[,1])
   ci<-intersect(m0[,2],m1[,2])
   m0<-m0[which(m0[,1]%in%ri&m0[,2]%in%ci),]
   m1<-m1[which(m1[,1]%in%ri&m1[,2]%in%ci),]
-  problems<-FALSE
-
-  if( rn == 1 ) {
-    rand1<-sample(1:dim(m0)[1],1)
-    row<-m0[rand1,1]
-    col<-m0[rand1,2]
-    pos<-merge(m1[which(m1[,2]==col),1],m1[which(m1[,1]==row),2])
-    names(pos)<-c("row","col")
-    inter<-intersect(pos,m0)
-    if( !dim(inter)[1]>0 ) problems<-TRUE
-    rand2<-sample(1:dim(inter)[1],1)
-    row2<-inter[rand2,1]
-    col2<-inter[rand2,2]
-  } else {
-    rand1<-sample(1:dim(m1)[1],1)
-    row<-m1[rand1,1]
-    col<-m1[rand1,2]
-    pos<-merge(m0[which(m0[,2]==col),1],m0[which(m0[,1]==row),2])
-    names(pos)<-c("row","col")
-    inter<-intersect(pos,m1)
-    if( !dim(inter)[1]>0 ) problems<-TRUE
-    rand2<-sample(1:dim(inter)[1],1)
-    row2<-inter[rand2,1]
-    col2<-inter[rand2,2]
+  problems<-TRUE
+  while( problems ) {
+    problems<-FALSE
+    rn<-rbinom(1,1,0.5)
+    if( rn == 1 ) {
+      rand1<-sample(1:dim(m0)[1],1)
+      row<-m0[rand1,1]
+      col<-m0[rand1,2]
+      pos<-merge(m1[which(m1[,2]==col),1],m1[which(m1[,1]==row),2])
+      names(pos)<-c("row","col")
+      pos<-as.matrix(pos)
+      inter<-m.intersect(pos,m0)
+      if( !dim(inter)[1]>0 ) {
+        problems<-TRUE
+      } else {
+        rand2<-sample(1:dim(inter)[1],1)
+        row2<-inter[rand2,1]
+        col2<-inter[rand2,2]
+      }
+    } else {
+      rand1<-sample(1:dim(m1)[1],1)
+      row<-m1[rand1,1]
+      col<-m1[rand1,2]
+      pos<-merge(m0[which(m0[,2]==col),1],m0[which(m0[,1]==row),2])
+      names(pos)<-c("row","col")
+      pos<-as.matrix(pos)
+      inter<-m.intersect(pos,m1)
+      if( !dim(inter)[1]>0 ) {
+        problems<-TRUE
+      } else {
+        rand2<-sample(1:dim(inter)[1],1)
+        row2<-inter[rand2,1]
+        col2<-inter[rand2,2]
+      }
+    }
   }
   rows<-c(row,row2)
   cols<-c(col,col2)
@@ -124,4 +134,11 @@ createRandomGraph<-function(x) {
     }
   }
   return(x)
+}
+
+
+m.intersect<-function(x,y) {
+  m3<-rbind(x,y)
+  m3<-m3[duplicated(m3), , drop = FALSE]
+  return(m3)
 }
