@@ -34,20 +34,14 @@ drill<-function(x,row,col) {
 getSig<-function(x,rgraphs) {
   nr<-dim(x)[1]
   nc<-dim(x)[2]
-  pu<-matrix(nrow=nr,ncol=nc)
-  pl<-matrix(nrow=nr,ncol=nc)
-  numgraphs<-length(rgraphs$a)
-  for( i in c(1:nr) ) {
-    for(j in c(1:nc) ) {
-      t<-x[i,j]
-      g<-rgraphs$a[drill(rgraphs$a,i,j)>=t]
-      puc<-length(g)/numgraphs
-      g<-rgraphs$a[drill(rgraphs$a,i,j)<=t]
-      plc<-length(g)/numgraphs
-      pu[i,j]<-puc
-      pl[i,j]<-plc
-    }
-  }
+
+
+  pu.matrices<-lapply(rgraphs$a,FUN=function(x,e){ (x<=e)*1 },e=x)
+  pu<-Reduce("+",pu.matrices)/length(pu.matrices)
+
+  pl.matrices<-lapply(rgraphs$a,FUN=function(x,e){ (x>=e)*1 },e=x)
+  pl<-Reduce("+",pl.matrices)/length(pl.matrices)
+
   std<-apply(simplify2array(rgraphs$a),c(1,2),sd)
   S<-msdAssoc(x,e=rgraphs$expected)
   ses<-sapply(rgraphs$a,msdAssoc,e=rgraphs$expected)

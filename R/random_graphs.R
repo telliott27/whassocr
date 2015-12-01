@@ -19,8 +19,6 @@
 
 
 randomGraphs<-function(x,n=1000) {
-  assign("num.calls",0,envir=.GlobalEnv)
-
   pb<-txtProgressBar(min=0,max=n,style=3)
   graphs<-list()
   assoc<-list()
