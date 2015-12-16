@@ -11,7 +11,7 @@
 #'
 #' @details The grouping variable \code{group} is used to aggregate observational data to
 #'  daily, weekly, yearly, etc., rates of association. This allows you to calculate a lagged association
-#'  rate between two months or two years.
+#'  rate between two months or two years. Cases that should be grouped together should be assigned the same group number.
 #'
 #'  \code{cutoff} is only useful if you group observations, and allows you to set a minimum number of times
 #'  two entities must be observed together in order to count as being associated. Note that two entities must

@@ -7,16 +7,19 @@ Authors@R: c(
   person("Thomas","Elliott",email="telliott@fastmail.com",role=c("aut","cre")),
   person("Justin","O'Neill",email="juiceboy@gmail.com",role="ppt"))
 Description: This package implements Whitehead's method for analyzing
-  association data. While Whitehead developed these techniques for animal
-  associations, this package is agnostic as to the nature of the data, but
-  assumes data are generally structured as entities in columns and
-  observations in rows, with cells=c(0,1) indicating whether entities
-  were observed during the row observation.
+    association data. While Whitehead developed these techniques for animal
+    associations, this package is agnostic as to the nature of the data, but
+    assumes data are generally structured as entities in columns and
+    observations in rows, with cells=c(0,1) indicating whether entities
+    were observed during the row observation.
 License: GPL-3
 LazyData: TRUE
 URL: https://github.com/thom82/whassocr
-Imports: 
-  dplyr
-Suggests: knitr,
-    rmarkdown
+Imports:
+    dplyr
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1
