@@ -21,58 +21,67 @@
 #'  @export
 
 #need to make this work when there is no grouping
-lar<-function(x,group,t=1,cutoff=0) {
+lar<-function(x,group=c(1:dim(x)[1]),t=1,cutoff=0) {
+  #make groups generic
   times<-group-min(group)+1
+  #check if observations are grouped
+  ngroups<-length(unique(times))
+  nogroups<-ngroups==dim(x)[1]
   x<-as.matrix(x)
   sumN<-0
   sumD<-0
   if( t>= max(times) ) stop("Time lag exceeds total time")
+  if( nogroups & cutoff > 0 ) stop("cutoff cannot be greater than 0 if not grouping observations")
   for( i in c(1:(length(times)-t)) ) {
-    a<-x[which(times==i),]
+    a<-as.matrix(x[which(times==i), ,drop=F])
+    b<-as.matrix(x[which(times==(i+t)), ,drop=F])
+    #have to reverse the order of matrix multiplication if extracting
+    #only one row versus more than one row
     a<-t(a)%*%a
-    a<-(a>cutoff)*1
-    b<-as.matrix(x[which(times==(i+t)),])
     b<-t(b)%*%b
+    a<-(a>cutoff)*1
     b<-(b>cutoff)*1
-    for( j in c(1:dim(a)[1]) ) {
-      for( k in c(1:dim(a)[1] ) ) {
-        if( j != k ) {
-          ajXY<-a[j,k]
-          akXY<-b[j,k]
-          akXX<-b[j,j]
-          sumN<-sumN + (ajXY*akXY)
-          sumD<-sumD + (ajXY*akXX)
-        }
-
-      }
-    }
+    c<-a*b
+    #the sum of the number of pair observations (minus the diagonal)
+    sumN<-sumN+sum(c)-sum(diag(c))
+    #the sum of a given b minus the diagonal
+    #essential the number of times a single entity is observed in both time periods
+    sumD<-sumD+sum(a%*%diag(b))-sum(diag(c))
   }
   g<-sumN/sumD
   return(g)
 }
 
+##NULL association rate is not being calculated correctly
 
 #' @describeIn lar Calculate the null lagged association rate
 #' @export
-null.lar<-function(x,group,t=1,cutoff=0) {
+null.lar<-function(x,group=c(1:100),t=1,cutoff=0) {
   times<-group-min(group)+1
+  #check if observations are grouped
+  ngroups<-length(unique(times))
+  nogroups<-ngroups==dim(x)[1]
   sumN<-0
   sumD<-0
   if( t>= max(times) ) stop("Time lag exceeds total time")
+  if( nogroups & cutoff > 0 ) stop("cutoff cannot be greater than 0 if not grouping observations")
   for( i in c(1:(length(times)-t)) ) {
-    a<-x[which(times==i),]
+    a<-as.matrix(x[which(times==i), ,drop=F])
+    b<-as.matrix(x[which(times==(i+t)), ,drop=F])
+    #have to reverse the order of matrix multiplication if extracting
+    #only one row versus more than one row
     a<-t(a)%*%a
-    a<-(a>cutoff)*1
-    b<-as.matrix(x[which(times==(i+t)),])
     b<-t(b)%*%b
+    a<-(a>cutoff)*1
     b<-(b>cutoff)*1
-    da<-sum(apply(a,2,sum))-1
-    db<-sum(apply(b,2,sum))-1
+    diag(a)<-0
+    diag(b)<-0
+    da<-sum(apply(a,2,sum))
+    db<-sum(apply(b,2,sum))
 
     sumN<-sumN + da + db
 
-    sumD<-sumD+dim(a)[1]
-    sumD<-sumD+dim(a)[1]
+    sumD<-sumD+2*dim(a)[1]
   }
 
   gr<-sumN/sumD
