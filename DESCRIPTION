@@ -1,7 +1,7 @@
 Package: whassocr
 Type: Package
 Title: An Implementation of Whitehead's Association Analysis
-Version: 0.0.0.9000
+Version: 0.0.0.9010
 Date: 2015-11-06
 Authors@R: c(
   person("Thomas","Elliott",email="telliott@fastmail.com",role=c("aut","cre")),

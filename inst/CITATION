@@ -1,0 +1,12 @@
+citHeader("To cite whassocr in publications use:")
+
+citEntry(entry = "Manual",
+  title        = "Whitehead Association Network Analysis",
+  author       = personList(as.person("Thomas Elliott")),
+  year         = "2015",
+  note         = "R Package Version 0.0.0.9010",
+  url          = "http://www.github.com/thom82/whassocr/",
+
+  textVersion  =
+  paste("Elliott, Thomas. 2015. Whitehead Association Network Analysis. R Package Version 0.0.0.9010. URL: http://www.github.com/thom82/whassocr")
+)
