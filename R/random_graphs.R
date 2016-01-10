@@ -15,8 +15,7 @@
 #'  \item{a}{A list of length \code{n} containing all the association
 #'    matrices generated from g above}
 #'  \item{expected}{A n x n matrix containing the average association index from the graphs in \code{a}}
-#'  @export
-
+#' @export
 
 randomGraphs<-function(x,n=1000) {
   pb<-txtProgressBar(min=0,max=n,style=3)

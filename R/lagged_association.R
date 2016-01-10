@@ -1,3 +1,4 @@
+
 #' Lagged Association Rate
 #'
 #' Calculate the lagged association rate for a two-mode observation matrix
@@ -17,10 +18,8 @@
 #'  two entities must be observed together in order to count as being associated. Note that two entities must
 #'  be observed together MORE THAN the value of \code{cutoff}
 #'
-#'  @return The lagged association rate for the observation matrix for a lag of \code{t}
-#'  @export
+#'@export
 
-#need to make this work when there is no grouping
 lar<-function(x,group=c(1:dim(x)[1]),t=1,cutoff=0) {
   #make groups generic
   times<-group-min(group)+1
@@ -56,7 +55,7 @@ lar<-function(x,group=c(1:dim(x)[1]),t=1,cutoff=0) {
 
 #' @describeIn lar Calculate the null lagged association rate
 #' @export
-null.lar<-function(x,group=c(1:100),t=1,cutoff=0) {
+null.lar<-function(x,group=c(1:dim(x)[1]),t=1,cutoff=0) {
   times<-group-min(group)+1
   #check if observations are grouped
   ngroups<-length(unique(times))
