@@ -36,3 +36,4 @@ test_that("Ungrouped LAR with longer lag calculated correctly",{
 test_that("Ungrouped LAR with cutoff>0 stops",{
   expect_error(lar(test.df,cutoff=2))
 })
+
