@@ -36,10 +36,10 @@ getSig<-function(x,rgraphs) {
   nc<-dim(x)[2]
 
 
-  pu.matrices<-lapply(rgraphs$a,FUN=function(x,e){ (x<e)*1 },e=x)
+  pu.matrices<-lapply(rgraphs$a,FUN=function(x,e){ (x<=e)*1 },e=x)
   pu<-Reduce("+",pu.matrices)/length(pu.matrices)
 
-  pl.matrices<-lapply(rgraphs$a,FUN=function(x,e){ (x>e)*1 },e=x)
+  pl.matrices<-lapply(rgraphs$a,FUN=function(x,e){ (x>=e)*1 },e=x)
   pl<-Reduce("+",pl.matrices)/length(pl.matrices)
 
   std<-apply(simplify2array(rgraphs$a),c(1,2),sd)
