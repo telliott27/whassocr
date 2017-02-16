@@ -62,7 +62,46 @@ makeAssociation<-function(x) {
   return(m)
 }
 
+#' @describeIn makeAssociation Association rates that are not symmetric
+#' @export
 
+makeNonSymAssociation<-function(x) {
+  #get column names
+  a<-colnames(x)
+  #get number of rows
+  n<-dim(x)[1]
+  #get number of columns
+  cols<-dim(x)[2]
+  #if there were no column names, then create unlabeled matrix
+  #else create a labeled matrix
+  if ( length(a) == 0 ) {
+    m<-matrix(nrow=cols,ncol=cols)
+  } else {
+    m<-matrix(nrow=length(a),ncol=length(a))
+    rownames(m)<-colnames(m)<-a
+  }
 
+  xy<-function(i,j,x) {
+    if( i == j ) {
+      t<-0
+    } else {
+      n<-dim(x)[1]
+      c1<-x[,i]
+      c2<-x[,j]
+      D<-sum(c1)
+      z<-sum(pmin2(c1,c2))
+      t<-z/D
+      if ( is.nan(t) ) t<-0
+    }
+    return(t)
+  }
+
+  for( i in c(1:cols) ) {
+    for( j in c(1:cols) ) {
+      m[i,j]<-xy(i,j,x)
+    }
+  }
+  return(m)
+}
 
 

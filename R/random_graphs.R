@@ -9,6 +9,7 @@
 #' @param n the number of random graphs to generate. Default is 1000, however
 #'  the proper number of random graphs to generate will depend on the size and
 #'  sparseness of \code{x}
+#'  @param symmetric should the association rates calculated by symmetric?
 #'
 #' @return A list containing three objects:
 #'  \item{g}{A list of length \code{n} containing all the random m x n matrices}
@@ -17,28 +18,31 @@
 #'  \item{expected}{A n x n matrix containing the average association index from the graphs in \code{a}}
 #' @export
 
-randomGraphs<-function(x,n=1000) {
-  pb<-txtProgressBar(min=0,max=n,style=3)
+randomGraphs<-function(x,n=1000,symmetric=TRUE,progbar=TRUE) {
+  if( progbar ) { pb<-txtProgressBar(min=0,max=n,style=3)  }
   graphs<-list()
   assoc<-list()
   g<-x
   j<-floor(n/2)
   for( i in c(1:j) ) {
     graphs[[i]]<-g
-    assoc[[i]]<-makeAssociation(g)
     g<-createRandomGraph(g)
-    setTxtProgressBar(pb,i)
+    if( progbar ) { setTxtProgressBar(pb,i) }
   }
   g<-x
   for( i in c(1:j) ) {
     graphs[[i]]<-g
-    assoc[[i]]<-makeAssociation(g)
     g<-createRandomGraph(g)
-    setTxtProgressBar(pb,i+j)
+    if( progbar ) { setTxtProgressBar(pb,i+j) }
+  }
+  if( symmetric ) {
+    assoc<-lapply(graphs,makeAssociation)
+  } else {
+    assoc<-lapply(graphs,makeNonSymAssociation)
   }
   expected<-Reduce("+",assoc)/n
   r<-list(g=graphs,a=assoc,expected=expected)
-  close(pb)
+  if( progbar ) { close(pb) }
   return(r)
 }
 

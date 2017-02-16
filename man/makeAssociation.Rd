@@ -2,9 +2,12 @@
 % Please edit documentation in R/assoc.functions.R
 \name{makeAssociation}
 \alias{makeAssociation}
+\alias{makeNonSymAssociation}
 \title{Generate Association Matrix from Observed Association Data}
 \usage{
 makeAssociation(x)
+
+makeNonSymAssociation(x)
 }
 \arguments{
 \item{x}{a m x n data frame or matrix that contains the entities observed
@@ -19,4 +22,8 @@ A n x n matrix containing the association rates between each n entity in x
 of observed association data and generates a n x n matrix of
 association rates between n entities.
 }
+\section{Functions}{
+\itemize{
+\item \code{makeNonSymAssociation}: Association rates that are not symmetric
+}}
 

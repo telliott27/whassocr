@@ -3,6 +3,7 @@
 export(getSig)
 export(lar)
 export(makeAssociation)
+export(makeNonSymAssociation)
 export(net.density)
 export(null.lar)
 export(randomGraphs)

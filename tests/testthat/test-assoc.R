@@ -22,3 +22,11 @@ test_that("makeAssociation calculates association rates correctly",{
   expect_equal(round(makeAssociation(test.df)[3,5],7),0.1851852)
   expect_equal(makeAssociation(test.df)[6,6],0)
 })
+
+
+test_that("makeNonSymAssociation calculates association rates correctly",{
+  #have to round to seven digits
+  expect_equal(round(makeNonSymAssociation(test.df)[1,2],7),0.3333333)
+  expect_equal(round(makeAssociation(test.df)[3,5],7),0.3571429)
+  expect_equal(makeAssociation(test.df)[6,6],0)
+})

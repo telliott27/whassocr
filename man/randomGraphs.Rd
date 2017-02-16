@@ -4,14 +4,15 @@
 \alias{randomGraphs}
 \title{Create random data based off of observed data}
 \usage{
-randomGraphs(x, n = 1000)
+randomGraphs(x, n = 1000, symmetric = TRUE)
 }
 \arguments{
 \item{x}{a m x n matrix of observatinos by entities.}
 
 \item{n}{the number of random graphs to generate. Default is 1000, however
 the proper number of random graphs to generate will depend on the size and
-sparseness of \code{x}}
+sparseness of \code{x}
+@param symmetric should the association rates calculated by symmetric?}
 }
 \value{
 A list containing three objects:
